@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import styled, { ThemeProvider } from "styled-components";
+import Card from "./components/Card";
+import { lightTheme, darkTheme } from "./themes";
+import Button from "./components/Button";
 
+const StyledMain = styled.div`
+  background-color: ${(props) => props.theme.backgroundColor};
+  height: 100vh;
+`;
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const currentTheme = isDarkMode ? darkTheme : lightTheme;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={currentTheme}>
+      <StyledMain>
+        <Button onToggle={() => setIsDarkMode(!isDarkMode)} />
+        <CardContainer>
+          <Card />
+        </CardContainer>
+      </StyledMain>
+    </ThemeProvider>
   );
 }
+
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
 
 export default App;
